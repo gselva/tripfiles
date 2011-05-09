@@ -1,0 +1,79 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+	<title>Trip Files - Your mileage expensing made easy!</title> 
+	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />	
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	
+	{% block css_links %}
+	{% endblock %}
+	
+	<!--[if !IE 7]>
+	<style type="text/css">
+		#wrap {display:table;height:95%}
+	</style>
+	<![endif]-->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>	
+	<script src="/js/jquery.qtip-1.0.0-rc3.js"></script>
+	
+	{% block scripts %}
+	{% endblock %}
+</head>
+
+{% block body_initialize %}
+<body>
+{% endblock %}
+
+<div id="page_main">
+	<div id="header">
+		<div id="header_logo" id="login-tooltip"><img src="/images/logo.png"></div>
+		<div id="header_title">Mileage expensing made easy!</div>		
+		
+		{% if user_logged_in and user_registered %}		
+			<a href="{{ url }}"><img class="login_button_class" src="/images/logoutbtn.png" /></a>
+			<a href="/account/" ><img class="login_button_class" src="/images/accountbtn.png" id="account-tip"/></a>			
+			<span class="login_text">Welcome {{ username }}</span> 	
+		{% endif %}	
+		{% if  user_logged_in and not user_registered %}
+			<a href="/register" ><img class="login_button_class" src="/images/registerbtn.png" id="register-tip"/></a> 
+			<a href="{{ url }}"><img class="login_button_class" src="/images/logoutbtn.png" /></a>
+			<span class="login_text">Welcome {{ username }}</span> 
+		{% endif %}	
+		{% if not user_logged_in and not user_registered %}			
+			<a href="/register" ><img class="login_button_class" src="/images/registerbtn.png" id="register-tip"/></a> 
+			<a href="{{ url }}" ><img class="login_button_class" src="/images/loginbtn.png"  id="login-tip"/></a>
+		{% endif %}			
+	</div>	
+	<div style="clear: both" ></div>				
+	
+	<div id="content_main"> 
+		<div id="app_navigation">
+			<a id="nav_link" href="/">Home</a>
+			{% if report_enabled %}
+				<a id="nav_link" href="/report">Reports</a>
+			{% endif %}
+			<a id="nav_link"  href="/support">Pricing & Help</a>
+			
+		</div>
+		<div style="clear: both" ></div>
+		
+		<div id="app_main">
+		{% block page_content %}
+		<p> Please hang in there. We have a technical problem. TripFiles should be available shortly.</p>
+		{% endblock %}
+		</div> <!--app_main-->
+			
+	</div> <!--content_main-->
+	<!--div id="page_about"></div-->
+</div> <!--page_main-->
+<!--div id="page_footer">&copy; Trip Files, 2010. </div-->	
+
+</body>
+<script src="/js/tripfiles-common-0.5.js"></script>
+
+{% block after_body %}
+{% endblock %}
+
+</html>

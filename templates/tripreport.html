@@ -1,0 +1,233 @@
+
+<div class="tripreport">
+{% if userdata %}
+<div class="report-for-who">{{userdata.mileage_template}}</div>
+<div class="report-title">CLAIM FOR TRAVELLING & SUBSISTENCE ALLOWANCES</div>
+<!--div class="appendix_title">APPENDIX A</div-->
+<div style="padding-top: 10px; padding-bottom:10px; clear: both;"> </div>
+
+<table class="user_data_table" cellpadding=0>
+<tbody>
+	<tr>
+		<td width="12%">Name</td>
+		<td width="36%"  colspan=3 class="bold-italic">{{userdata.first_name}} {{userdata.middle_name}} {{userdata.last_name}}</td>
+		<td width="12%">Make, CC of vehicle</td>
+		<td width="36%" colspan=3 class="bold-italic">{{userdata.vehicle_make}} {{userdata.vehicle_cc}}</td>
+	</tr>
+	<tr>
+		<td width="12%" >Designation/Grade</td>
+		<td width="12%" class="bold-italic">{{userdata.work_title}}</td>
+		<td width="12%" >Personal No</td>
+		<td width="12%" class="bold-italic">{{userdata.work_id}}</td>
+		<td width="12%" >Registration Number</td>
+		<td width="36%" colspan=3 class="bold-italic">{{userdata.vehicle_registration}}</td>
+	</tr>
+	<tr>
+		<td width="12%" >Home Address</td>
+		<td width="36%" colspan="3" class="bold-italic">{{userdata.home_address}}</td>
+		<td width="12%" >PCT LEASE CAR</td>
+		<td width="36%" colspan="3" class="bold-italic">YES / NO</td>
+	</tr>
+	
+	<tr>
+		<td width="48%"  colspan="4" ></td>
+		<td width="12%">Base</td>	
+		<td width="12%" class="bold-italic">{{userdata.office_base_address}}</td>
+		<td width="12%">Distance from Home</td>
+		<td width="12%"></td>						
+	</tr>
+</tbody>	
+</table>
+{% endif %}
+<div style="padding-top: 10px; padding-bottom:10px; clear: both;"> </div>
+{% if reportview %}
+	{% if reportview and reportview.firstpage_trips %}
+	<table>
+	<thead> 
+		<tr> 
+			<th scope="col" style="border-bottom: none;">Date</th> 
+			<th scope="col" style="border-bottom: none;">Duty</th>
+			<th scope="col" style="border-bottom: none;">Details of journey, course, subsistence or other expenses<sup>2</sup></th> 
+			<th scope="col" colspan=2 >Number of miles</th>
+			
+			<th scope="col" colspan=2>Official Passengers</th>
+			
+			<th scope="col" colspan=3>Fares<sup>1</sup>
+			<br/>R = Rail<br />B = Bus<br />T = Taxi<br />P = Parking Costs</th>
+
+			<th scope="col" colspan=2>Amount of Subsistence<sup>1</sup></th>
+
+			<th scope="col" colspan=2>Other (eg:course fees<sup>1</sup>)</th>
+		</tr> 
+		<tr> 
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col">Code</th>
+			<th scope="col">Miles</th>
+			<th scope="col">No</th>
+			<th scope="col">Miles</th>
+			<th scope="col">Code</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+		</tr>
+	</thead>	
+	<tbody>
+		{% for trip in reportview.firstpage_trips %}
+			<form id="{{trip.id}}" name="modifyform" action="/modify" method="post">
+				<input type=hidden name="trip_key" value='{{ trip.id }}'></input>
+			</form>
+		<tr id='trip{{trip.id}}'>
+			<td width="10%" >{{trip.date}}&nbsp;</td>
+			<td width="5%">&nbsp</td>
+			<td width="35%">{{trip.addresses}}</td>
+			
+			
+			<td width="4%">{{trip.code}}</td>
+			 {% ifequal trip.distance 0.0 %}
+			<td width="4%">&nbsp;</td>			 
+			 {% else %}
+			<td width="4%">{{trip.distance}}</td>
+			{% endifequal %} 
+			
+			<td width="4%">{{trip.other_no_passengers}} </td>
+			<td width="4%">{{trip.other_passenger_miles}}</td>
+			
+			<td width="4%">{{trip.other_expense_label}}</td>
+			<td width="4%">{{trip.other_expense_pound}}</td>
+			<td width="4%">{{trip.other_expense_pence}}</td>
+			
+			<td width="4%"></td>
+			<td width="4%"></td>
+	
+			<td width="4%"></td>
+			<td width="4%"></td>
+			
+			<td width="10%" 
+					style="border-top: none; border-right: none; border-bottom: none;">
+				<div id="update_actions">
+					<a href="#" onClick="modifyTrip('{{ trip.id }}');return false;">
+						<img style="border: none;" src="/images/changetripbtn.png" />
+					</a>
+					<a href="#" onClick="deleteTrip('{{ trip.id }}');return false;">
+						<img style="border: none;" src="/images/deletetripbtn.png" />
+					</a>
+				</div>
+			</td>
+				
+		</tr>
+		{% endfor %}
+	</tbody>
+	{% endif %}
+	
+	{% if reportview and reportview.nextpages %}
+	{% for apage in reportview.nextpages %}
+	</table>
+	
+	<div class="page-breaker">&nbsp;</div>
+	
+	<table>
+	<thead> 
+		<tr> 
+			<th scope="col" style="border-bottom: none;">Date</th> 
+			<th scope="col" style="border-bottom: none;">Duty</th>
+			<th scope="col" style="border-bottom: none;">Details of journey, course, subsistence or other expenses<sup>2</sup></th> 
+			<th scope="col" colspan=2 >Number of miles</th>
+			
+			<th scope="col" colspan=2>Official Passengers</th>
+			
+			<th scope="col" colspan=3>Fares<sup>1</sup>
+			<br/>R = Rail<br />B = Bus<br />T = Taxi<br />P = Parking Costs</th>
+
+			<th scope="col" colspan=2>Amount of Subsistence<sup>1</sup></th>
+
+			<th scope="col" colspan=2>Other (eg:course fees<sup>1</sup>)</th>
+		</tr> 
+		<tr> 
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col">Code</th>
+			<th scope="col">Miles</th>
+			<th scope="col">No</th>
+			<th scope="col">Miles</th>
+			<th scope="col">Code</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+		</tr>
+	</thead>	
+
+	<tbody>
+	{% for trip in apage %}
+		<form id="{{trip.id}}" name="modifyform" action="/modify" method="post">
+			<input type=hidden name="trip_key" value='{{ trip.id }}'></input>
+		</form>
+		<tr id='trip{{trip.id}}'>
+			<td width="10%" >{{trip.date}}&nbsp;</td>
+			<td width="5%">&nbsp</td>
+			<td width="35%">{{trip.addresses}}</td>
+			
+			
+			<td width="4%">{{trip.code}}</td>
+			 {% ifequal trip.distance 0.0 %}
+			<td width="4%">&nbsp;</td>			 
+			 {% else %}
+			<td width="4%">{{trip.distance}}</td>
+			{% endifequal %} 
+			
+			<td width="4%">{{trip.other_no_passengers}} </td>
+			<td width="4%">{{trip.other_passenger_miles}}</td>
+			
+			<td width="4%">{{trip.other_expense_label}}</td>
+			<td width="4%">{{trip.other_expense_pound}}</td>
+			<td width="4%">{{trip.other_expense_pence}}</td>
+			
+			<td width="4%"></td>
+			<td width="4%"></td>
+	
+			<td width="4%"></td>
+			<td width="4%"></td>
+			
+			<td width="10%" 
+					style="border-top: none; border-right: none; border-bottom: none;">
+				<div id="update_actions">
+					<a href="#" onClick="modifyTrip('{{ trip.id }}');return false;">
+						<img style="border: none;" src="/images/changetripbtn.png" />
+					</a>
+					<a href="#" onClick="deleteTrip('{{ trip.id }}');return false;">
+						<img style="border: none;" src="/images/deletetripbtn.png" />
+					</a>
+				</div>
+			</td>
+				
+		</tr>
+	{% endfor %}
+	</tbody>
+	{% endfor %}
+	{% endif %}
+		
+	<tfoot> 
+		<th scope="col" colspan=3>TOTALS</th>
+		<th scope="col"></th>
+		<th scope="col">{{ reportview.distance }}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.report_total_passenger_mileage}}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.total_other_expense_pound}}</th>
+		<th scope="col">{{reportview.total_other_expense_pence}}</th>
+		<th scope="col" colspan=4></th>
+	</tfoot> 	
+	</table>
+{% else %}
+	No trips created between {{  reportview.startdate }} and {{  reportview.enddate }}! 
+{% endif %}
+</div>
+

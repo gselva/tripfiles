@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+{% if tripuser %}
+<div class="page_title">Account Update</div>
+{% else %}
+<div class="page_title">Account Registration</div>
+{% endif %}		
+<div style="clear: both" ></div>
+<div id="app_notification">{{app_notification}}</div>	
+<div style="clear: both" ></div>
+<div id="info_box_parent" style="width: 90%; margin: 10px 10px 10px 10px;">
+<div id="user_info_box" style="border: 1px solid green; width: 55%; float: left; margin-left: 20px;"><div style="font-weight: bold;  padding-bottom: 10px; font-size: 1.2em;">What goes on the Mileage Report</div>
+	<form name="accountForm" id="accountForm" 
+	{% if tripuser %}
+	action="/account/update"
+	{% else %}
+	action="/register"			
+	{% endif %}
+	method="post">
+		<fieldset id="" style="height: 60px; width: 90%; border: none; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 0px;">
+		<ul style="float: left; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;">
+		<li style="float: left; width: 170px; height: 50px;"><label for="input_mileage_template">Report template</label> 
+		<select name="input_mileage_template" class="register_input">
+		<option value="HILLINGDON PRIMARY CARE TRUST"
+		{% ifequal  tripuser.mileage_template  'HILLINGDON PRIMARY CARE TRUST' %}	
+		selected="selected"
+		{% endifequal %}
+		>HILLINGDON PRIMARY CARE TRUST</option>
+		<option value="BUCKS NHS TRUST"
+		{% ifequal  tripuser.mileage_template 'BUCKS NHS TRUST' %}	
+		selected="selected"
+		{% endifequal %}		
+		>BUCKINGHAMSHIRE NHS TRUST</option>
+		</select>
+		<!--input name="input_mileage_template" class="register_input" value="{{tripuser.mileage_template}}"></input-->
+		</li>
+		</ul>
+		</fieldset>
+		<fieldset id="" style="height: 60px; width: 90%; border: none; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 0px;">
+		<ul style="float: left; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;">
+		<li style="float: left; width: 170px; height: 50px;"><label for="input_first_name">First Name</label> <input type="text" name="input_first_name" value="{{tripuser.first_name}}" class="register_input"></input>
+		</li>
+		<!--li style="float: left;"><label for="input_middle_name">Middle Name</label> <input type="text" name="input_middle_name" value="{{tripuser.middle_name}}" class="register_input"></input>
+		</li-->
+		<li style="float: left; width: 170px; height: 50px;">	
+		<label for="input_last_name">Last Name</span> <input type="text" name="input_last_name" value="{{tripuser.last_name}}" class="register_input"></input>
+		</li>
+		</ul>
+		</fieldset>
+
+		<fieldset id="" style="height: 60px; width: 90%; border: none; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 0px;">
+		<ul style="float: left; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;">
+		<li style="float: left; width: 170px; height: 90px;">				
+		<label for="input_home_address">Home Address</label> <textarea name="input_home_address" cols=30 rows=3 class="register_input">{{tripuser.home_address}}</textarea>
+		</li>
+		
+		<li style="float: left; width: 170px; height: 90px;">				
+		<label for="input_office_base_address">Office Base Address</label> 
+		<textarea name="input_office_base_address" cols=30 rows=3 class="register_input">{{tripuser.office_base_address}}</textarea>
+		</li>
+		</ul>
+		</fieldset>
+		
+		<fieldset id="" style="height: 60px; width: 90%; border: none; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 0px;">
+		<ul style="float: left; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;">
+		<li style="float: left; width: 170px; height: 50px;">
+		<label for="input_work_id">Work ID/Employee No</label> <input type="text" name="input_work_id" value="{{tripuser.work_id}}" style="float: left;"></input>
+		</li>
+		<li style="float: left; width: 170px; height: 50px;">			
+		<label for="input_work_title">Work Title</label> <input type="text" name="input_work_title" value="{{tripuser.work_title}}"  style="float: left;"></input>
+		</li>
+		<li style="float: left; width: 170px; height: 50px;">
+		<label for="input_work_department">Work Department</label> <input type="text" name="input_work_department" value ="{{tripuser.work_department}}" style="float: left;"></input>				
+		</li>
+		</ul>
+		</fieldset>
+
+
+		<fieldset id="" style="height: 60px; width: 90%; border: none; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 0px;">
+		<ul style="float: left; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;">
+		<li style="float: left; width: 170px; height: 50px;">				
+		<label for="input_vehicle_make">Vehicle Make:</label> <input type="text" name="input_vehicle_make" value="{{tripuser.vehicle_make}}" class="register_input"></input>
+		</li>
+		<li style="float: left; width: 170px; height: 50px;">				
+		<label for="input_vehicle_cc">Vehicle CC:</label> <input type="text" name="input_vehicle_cc" value="{{tripuser.vehicle_cc}}" class="register_input"></input>
+		</li>
+		
+		<li style="float: left; width: 170px; height: 50px;">				
+		<label for="input_vehicle_registration">Vehicle Registration:</label> <input type="text" name="input_vehicle_registration" value="{{tripuser.vehicle_registration}}" class="register_input"></input>
+		</li>
+		</ul>
+		</fieldset>
+		
+		<fieldset id="" style="height: 60px; width: 90%; border: none; margin: 0px 0px 0px 5px; padding: 0px 0px 0px 0px;">
+		<ul style="float: left; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;">
+		<li style="float: left; width: 500px; height: 50px;">
+		{% if tripuser %}
+		<a href="/account/update" onClick="submitForm('#accountForm'); return false;"><img src="/images/updatebtn.png" class="register_btn"/></a>
+		{% else %}
+		<a href="/register" onClick="submitForm('#accountForm'); return false;"><img src="/images/registerbtn.png" class="register_btn"/></a>	 			
+		<div style="margin-left: 100px;">
+			<div style="padding-top: 20px; font-style: italic; margin: 0px;"><a href="#" onclick="window.open('/support/tos.html','Terms of Service','width=800,height=600,toolbar=no,location=no,status=no')">Click here to read our Terms of Service.</a>
+			 
+			</div>
+		</div>		
+		
+		{% endif %}
+		</li>
+		</ul>
+		</fieldset>
+		
+	</form>
+
+</div>
+<div id="subscription_info_box" style="margin-left: 5px; border: 1px solid green; width: 30%; float: left; position: relative; "><span style="font-weight: bold;padding-left: 5px; font-size: 1.2em;">Available Subscription Plans</span>
+<fieldset style="border: none;">
+		{% for plan in active_subscriptions %}
+			<p style="font-weight: bold;"><em>{{plan.name}}</em></p><p>{{plan.description}}</p>
+		{% endfor %}			
+</fieldset>
+<div style="border-top: 1px solid green; width: 100%; padding: 2px;"></div>
+<span style="font-weight: bold; padding-left: 5px; font-size: 1.2em;">You have signed up for:</span>
+<fieldset style="border: none;">
+{% if valid_subscription %}
+	{% if user_subscription %}
+	<p style="font-weight: bold;"><em>{{user_subscription.name}}.</em> </p>
+		{% if subscription_expired %}
+			<p style="font-weight: bold; color: red;"><em>Subscription has expired on {{subscription_valid_until}}</em> </p>					
+			Click on Update button to renew your subscription <a href="{{subscription_url}}"><img style="border: none;" src="/images/updatebtn.png" /></a>
+		{% else %}
+			<p style="font-weight: bold; color: green;"><em>Subscription valid upto {{subscription_valid_until}}</em> </p>
+			Click on Update button to modify your subscription <a href="{{subscription_url}}"><img style="border: none;" src="/images/updatebtn.png" /></a>
+		{% endif %}
+	{% else %}
+	<p style="font-weight: bold;"><em>No active subscription.</em> </p>
+	<a href="{{subscription_url}}">Please use this <img src="/images/registerbtn.png" /> button to activate your subscription</a>
+	{% endif %}			
+{% else %}
+	<p style="font-weight: bold;">No subscription plan. </p>
+	{% if tripuser %}
+	<a href="{{subscription_url}}">Please use this <img src="/images/registerbtn.png" /> button to subscribe.</a>	
+	{% else %}
+	Please fill your details and click register to register and start your free subscription.
+	{% endif %}
+{% endif %}
+</fieldset>
+</div> <!--subscription_info_box-->
+</div> <!--info_box_parent-->
+{% endblock %}	

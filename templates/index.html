@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block css_links %}
+<style type="text/css">
+	table.adp-directions {display:none;}
+</style>	
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+{% endblock %}
+
+{% block body_initialize %}
+<body onload="initialize()">
+{% endblock %}
+
+{% block page_content %}
+	<div id="app_panel">
+		<form name="tripForm" id="tripForm" action="#" method="post">
+			{% if trip_key %}
+				<div style="font-size: 1.5em; font-weight: strong; text-align: center; margin-left:auto;margin-right:auto;padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid white; background: #999999; color: white;">Trip Update</div>
+				<input type="hidden" name="trip_key" value="{{trip_key}}" id="trip_key" /> 
+			{% else %}
+				<div style="font-size: 1.5em; font-weight: strong; text-align: center; margin-left:auto;margin-right:auto;padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid white; background: #999999; color: white;">New Trip</div>
+			{% endif %}
+			
+			{% if save_enabled %}
+				<div id="tripdate" style="border: 1px solid green; margin: 5px 15px 5px 15px; height: auto; width: auto;">
+					<div class="tripdate_label">Trip Date</div>					      
+				
+				{% if tripdate %}
+					<div class="date_input">
+						<input type="text" name="tripdate" value="{{tripdate}}" 
+						id="datepicker"  />
+					</div>
+			      {% else %}
+				      <div class="date_input">
+					      <input type="text" name="tripdate" id="datepicker"  />
+				      </div>
+				{% endif %}
+				</div>
+			{% endif %}
+
+		<div id="waypoints" style="border: 1px solid green; margin: 5px 15px 5px 15px; height: auto; width: auto;">
+			<div class="waypoints_label">
+	<a href="#" onclick="showHide('#waypoints_box'); return false;">Enter addresses</a>
+    </div>
+    <div id="waypoints_box">
+		{% for tripleg in triplegs %}
+			<div id="waypoint{{tripleg.sequence}}" class="waypoint" 
+				{% ifnotequal tripleg.sequence 0 %}
+					{% if tripleg.start %}
+						style=""
+					{% else %}
+						style="display:none;"
+					{% endif %} 
+				{% endifnotequal %}
+			>
+
+				<input type="hidden" name="leg{{tripleg.sequence}}" id="leg{{tripleg.sequence}}" 
+					class="leg-hidden-input" value="{{tripleg.distance}}" size=3 />
+
+				<div class="waypoint_label_image">
+				    <span id="waypoint_label_{{tripleg.sequence}}"
+				    class="waypoint_label_char">{{tripleg.sequence_label}}</span>
+			    </div>
+				<div class="waypoint_input">
+					<input 
+					type="text" 
+					name="input{{tripleg.sequence}}" 
+					maxlength="2048" 
+					id="input{{tripleg.sequence}}" 
+					title="Enter postcode or address" value="{{tripleg.start}}"/>
+				</div>
+				<div class="waypoint_menu">
+				{% ifnotequal tripleg.sequence 0 %}
+					
+<a href='#' onclick='removeWaypoint({{tripleg.sequence}});return false;'
+					id="removehref{{tripleg.sequence}}" class="removeaddress">
+					<img  class="tiny_button" src="/images/xbtn.png" />
+					</a>									
+				{% endifnotequal %}
+				{% ifnotequal tripleg.sequence 9 %}
+					
+<a href='#' onclick='addWaypoint({{tripleg.sequence}});return false;'
+   id="addhref{{tripleg.sequence}}" class="addaddress">
+					<img  class="tiny_button" src="/images/plusbtn.png" />
+					</a>
+				{% endifnotequal %}
+				</div>
+			</div> <!--waypoint-->
+		{% endfor %} 
+	<!--/div-->
+				<div style="clear: both;" ></div>
+				{% if total_miles %}
+				<div style="border: 2px solid grey; margin-left: 5px; margin-top: 10px;margin-bottom: 10px;  font-weight: bold; width: 200px; padding: 5px 5px 5px 5px;" id="total_miles_box">Total: <input type="text" name="total_miles" id="total_miles" value="{{total_miles}}" size=5 /> miles</div>
+				{% else %}
+				<div style="border: 2px solid grey; margin-left: 5px; margin-top: 10px;margin-bottom: 10px;  font-weight: bold; width: 200px; padding: 5px 5px 5px 5px;" id="total_miles_box">Total: <input type="text" name="total_miles" id="total_miles" value="0.0" size=5/> miles</div>
+				{% endif %}
+				<div style="clear: both;" ></div>
+		<div id="panel_menu">
+			<a id="calculate" href="#" onClick="recalcRoute();return false;">
+				<img class="app_button" src="/images/getmilesbtn.png" id="getmiles-tip"/></a>	
+			<div style="clear: both;" ></div>	
+
+		</div> <!--panel_menu-->
+</div><!--waypoints_box-->
+</div>
+
+ <div>
+	<div style="clear: both;" ></div>	
+	<div id="app_notification" class="notification_type">{{app_notification}}</div>
+	
+	<div style="clear: both;" ></div>
+	{% if save_enabled %}
+		<div style="border: 1px solid green; margin: 5px 15px 5px 15px;">
+				<div style="padding-left: 20px; clear: both; font-weight: bold;"><a href="#" onclick="showHide('#mode_box'); return false;">Mode of travel/Rate Code</a></div>
+				<div id="mode_box">
+					<div style="padding-left: 20px; clear: both; font-weight: bold;"> 	
+					<INPUT NAME="mode_of_travel" id="mode_of_travel" TYPE="text"/>
+					<!--select name="mode_of_travel" id="mode_of_travel">
+	    <option value=""></option>
+
+						<option value="R" 
+						{% ifequal mode_of_travel "R" %} 
+						selected
+						{% endifequal%}									
+						>Car Rate/Regular Rate</option>
+						
+						<option value="P"
+						{% ifequal mode_of_travel "P" %} 
+						selected
+						{% endifequal%}																		
+						>Public Transport Rate</option>
+						
+						<option value="S"
+						{% ifequal mode_of_travel "S" %} 
+						selected
+						{% endifequal%}																		
+						>Standard Rate</option>
+						
+						<option value="L"
+						{% ifequal mode_of_travel "L'" %} 
+						selected
+						{% endifequal%}																		
+						>Lease Car Rate</option>									
+					</select-->
+	
+					</div>
+				</div>
+				
+		</div>
+
+		<div style="border: 1px solid green; margin: 5px 15px 5px 15px;">
+			<div style="padding-left: 20px; clear: both; font-weight: bold;"><a href="#" onclick="showHide('#passenger_box'); return false;">Passenger Mileage</a></div>
+				<div id="passenger_box">
+					<div style="padding-left: 20px; clear: both; font-weight: bold;"> No. <input size=2
+						type="text" 
+						name="other_no_passengers" 
+						value="{{other_no_passengers}}"
+						maxlength=2
+						title="Enter number of passengers" 
+						id="other_no_passengers"/>
+						Miles: <input size=3
+						type="text" 
+						name="other_passenger_miles" 
+						value="{{other_passenger_miles}}"
+						maxlength=3
+						title="Enter passenger miles" 
+						id="other_passenger_miles"/>
+					</div>
+				</div>
+			</div>
+
+		
+		
+	<div style="border: 1px solid green; margin: 5px 15px 5px 15px;">
+				<div style="padding-left: 20px; clear: both; font-weight: bold;"><a href="#" onclick="showHide('#cpm_box'); return false;">Cost per mile</a></div>
+				<div id="cpm_box">
+					<div style="padding-left: 20px; clear: both; font-weight: bold;"> £: <input size=5
+					type="text" 
+					name="cost_per_mile_pound" 
+					maxlength="5" 
+					title="Enter cost per mile" 
+					{% if cost_per_mile_pound %}
+					value="{{cost_per_mile_pound}}"
+					{% else %}
+					value="0"
+					{% endif %}
+					id="cost_per_mile_pound" />
+					P: <input size=2
+					type="text" 
+					name="cost_per_mile_pence" 
+					maxlength="2" 
+					title="Enter cost per mile" 
+					{% if cost_per_mile_pence %}								
+					value="{{cost_per_mile_pence}}"
+					{% else %}
+					value="0"
+					{% endif %}
+					id="cost_per_mile_pence"/>
+					</div>
+				</div>
+				
+		</div>
+		<div style="border: 1px solid green; margin: 5px 15px 5px 15px;">
+			<div style="padding-left: 20px; clear: both; font-weight: bold;"><a href="#" onclick="showHide('#expenses_box'); return false;">Other Expenses Description</a></div>
+				<div id="expenses_box">
+					<div style="padding-left: 20px; clear: both; ">
+						<input size=30
+						type="text" 
+						name="label_parking_expenses" 
+						value="{{label_parking_expenses}}"
+						maxlength="2048" 
+						title="Enter parking/other expenses detail" 
+						 id="label_parking_expenses" />
+					</div>
+					<div style="padding-left: 20px; clear: both; font-weight: bold;"> £: <input size=5
+						type="text" 
+						name="other_expenses_charges_pound" 
+						value="{{other_expenses_charges_pound}}"
+						maxlength="5" 
+						title="Enter parking and other expenses" 
+						id="other_expenses_charges_pound"/>
+						P: <input size=2
+						type="text" 
+						name="other_expenses_charges_pence" 
+						value="{{other_expenses_charges_pence}}"
+						maxlength="2" 
+						title="Enter parking and other expenses" 
+						id="other_expenses_charges_pence"/>
+					</div>
+				</div>
+			</div>
+	<!--/div-->
+	{% endif %}
+
+
+	<div id="panel_menu">
+		{% if save_enabled %}
+			<div>
+				<a href="#"  onClick="saveTrip();return false;" id="savetrip-tip">
+					<img class="app_button" src="/images/savetripbtn.png" />
+				</a>
+				<a href="#"  onClick="clearTrip();return false;" id="cleartrip-tip">
+					<img class="app_button" src="/images/cleartripbtn.png" />
+				</a>
+			</div>
+		{% else %}
+		<div>
+				<a href="#"  onClick="clearTrip();return false;" id="cleartrip-tip">
+					<img class="app_button" src="/images/cleartripbtn.png" />
+				</a>
+			</div>
+		{% endif %}
+		
+	
+	</div>
+	<div style="clear: both;" ></div>
+	<div style="border: 1px solid green; margin: 5px 15px 5px 15px; padding-left: 20px; font-weight: bold;">
+		<a href="#" onclick="showHide('#directionsPanel'); return false;">More Mileage details</a>
+	</div>
+	<div id="directionsPanel" style="display: none;" isvalid="-1"> 				
+	</div>
+	
+	</div> <!--panel_menu-->	
+	</form>
+</div>	<!--app_panel-->
+<div id="map_canvas"></div>
+	
+{% endblock %}
+
+{% block after_body %}
+<script src="/js/tripfiles-maps-0.5.js"></script>
+{% endblock %}

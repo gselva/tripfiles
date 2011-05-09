@@ -1,0 +1,490 @@
+/* global styles */
+html {
+}
+
+html, body {    
+   height: 100%;
+   min-height: 100%;
+   width: 100%;
+   margin: 0px;
+   padding: 0px;
+   background: whiteSmoke;
+   overflow-y: hidden; /* scrollbar fix */
+}
+
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;
+}
+
+a {text-decoration:none}
+
+a:link { 
+	color: black;
+	}
+a:visited { 
+	color: black;
+	}
+	
+a:active { 
+	color: black;
+	}
+	
+
+/*trip files styles*/
+
+#page_main {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+   padding: 0px;
+}
+
+.login_button_class {
+padding-left: 10px;
+padding-right: 5px;
+padding-top: 1px;
+padding-bottom: 1px;
+float: right;
+border: none;
+background: transparent;
+}
+
+.login_text {
+float: right;
+text-align: left;
+font-style: italic;
+padding-top: 1px;
+padding-right: 20px;
+font-size: 1em;
+color: white;
+
+}
+
+.app_button {
+padding-left: 20px;
+padding-right: 5px;
+padding-top: 1px;
+padding-bottom: 20px;
+float: left;
+border: none;
+}
+
+.app_button hover img {
+border: 1px solid red;
+}
+
+.tiny_button {
+padding-left: 0px;
+padding-right: 1px;
+float: left;
+border: none;
+}
+
+
+#header {
+background: #77967a;
+width: 100%;
+height: 60px
+}
+
+#header_logo {
+float: left; 
+}
+
+#header_title {
+float: left;
+text-align: left;
+padding-left: 20px;
+padding-top: 20px;
+font-size: 1.2em;
+font-weight: bold;
+font-style: italic;
+color: black;
+}
+
+
+#app_navigation {
+clear: both;
+height: 30px;
+background: #04819E;
+text-align: left;
+vertical-align: bottom;
+padding-left: 20px;
+padding-bottom: 0px;
+color: black;
+font-size: 1.3em;
+font-weight: bold;
+}
+
+#nav_link {
+	float: left;
+	width: 150px;
+	height: 30px;
+	background: #04819E;
+	display: block;
+	padding-left: 5px;	
+	border-right: 1px solid white;
+}
+
+#nav_link:hover { background-color: whiteSmoke;}
+
+#app_notification {
+margin-top: 10px;
+margin-bottom: 10px;
+margin-left: 10px;
+margin-right: 10px;
+display: none;
+height: auto; /*80px;*/
+width: 90%;
+float: left;
+background: #505050;
+border: 3px solid #303030;
+text-align: center;
+vertical-align: middle;
+
+}
+
+.notification_type {
+display: none;
+}
+
+.app_tip {
+color: white;
+font-weight: bold;
+}
+
+.app_error {
+color: red;
+font-weight: bold;
+}
+
+#report_notification {
+display: none;
+float: left;
+height: 30px;
+width: 30%;
+background: #4476cc;
+border: 1px solid black;
+color: white;
+font-weight: bold;
+padding-right: 20px;
+padding-left: 20px;
+padding-bottom: 5px;
+}
+
+#content_main {
+	width: 100%;
+	overflow: auto;
+	height: 90%;
+	margin: 0px;
+	padding: 0px;
+
+}
+
+#app_main {
+	height: 90%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+#app_panel {
+	display: none;
+	float:left;
+	width:25%;
+	height: 80%;
+	background: whiteSmoke;	
+	margin: 0px 0px 5px;
+	border: 1px solid #DDD;
+	overflow-y: scroll; /* scrollbar fix */
+}
+
+#map_canvas { float: left;width:74%; height:80%; border: 1px solid black; /* overflow-x:hidden; */
+/* Prevent float drop in IE 6: http://www.yuiblog.com/blog/2010/10/28/css-quick-tip-how-to-prevent-a-float-drop-in-ie6 */
+margin-right:-100px;
+  position:relative;
+
+}
+
+#directionsPanel {
+padding-left: 20px;
+padding-top: 20px;
+font-weight: bold;
+}
+
+#tripdate {
+}
+
+.tripdate_label {
+padding-left: 20px;
+font-weight: bold;
+}
+
+.date_input {
+padding-left: 20px;
+}
+
+#waypoints {
+}
+
+.waypoints_label {
+padding-left: 20px;
+font-weight: bold;
+}
+
+.waypoint {
+	clear: left;
+	width: 100%;
+	height: 30px;
+}
+
+.waypoint_label_image {
+	float: left;
+	text-align: center; 
+	color: black;
+	padding-left: 2px;
+	padding-right: 2px;
+	width: 20px;
+	height: 27px;
+	background-image: url(/images/circle.png);  
+	background-repeat:no-repeat;
+  /*
+  background-color: #269926;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  */
+  border: none;
+}
+
+.waypoint_label_char {
+	color: black;
+	padding-bottom: 10px;
+	padding-right: 5px;
+}
+.waypoint_input {
+float: left;
+}
+
+.leg-hidden-input {
+	display: none;
+}
+.waypoint_menu{
+	float: left;
+}
+
+#panel_menu {
+}
+
+
+#triplabel {
+margin-top: 10px; 
+padding-left: 20px;
+font-weight: bold;
+}
+
+.triplabel_input {
+padding-left: 20px;
+}
+
+.adp-placemark td {
+float: left;
+}
+
+td.adp-text {
+float: left;
+padding-left: 25px;
+}
+
+/* report page css */
+
+#report-panel {
+background: whiteSmoke;
+width: auto;
+height:100%;
+padding-left:10px;
+}
+
+#report_panel_text {
+text-align: center;
+font-weight: bold;
+font-size: 1.3em;
+}
+
+#report_dates {
+float: left;
+width: 100%;
+height: 40px;
+background: whiteSmoke;
+padding-top: 10px;
+border-bottom: 1px solid black; 
+font-weight: bold;
+}
+
+.reportdate_label {
+float: left;
+padding-left: 20px;
+
+}
+
+.report_date_input {
+float: left;
+padding-left: 20px;
+}
+
+
+/* registration page */
+.page_title {
+	margin-left:auto;
+	margin-right:auto;
+	width:40%;
+padding-top: 10px;
+clear: both;
+font-size: 2em;
+color: black;
+background: whiteSmoke;
+text-align: center;
+text-decoration:underline;
+}
+
+.field_label {
+clear: both;
+float: left;
+margin-top: 10px; 
+padding-left: 5px;
+font-weight: bold;
+}
+
+.input_form {
+	text-align:left;
+	vertical-align:bottom;
+	background: whiteSmoke;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 5px; 
+	width:40%;
+	height: 100%;
+}
+
+.welcome_box {
+	text-align:left;
+	background: whiteSmoke;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 15px; 
+	width:40%;
+	height: 100%;
+	padding-left: 20px;
+	font-size: 1.3em;
+}
+
+.welcome_box li {
+	line-height: 2em;
+}
+
+.register_input {
+	float: left;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	width: 150px;
+	height: auto;
+
+}
+
+
+.register_btn {
+	clear: both;
+	float: left;
+	border: none;
+	padding-top: 20px;
+	padding-left: 5px;
+	
+}
+
+#cpm_box {
+display: none;
+height: 30px;
+padding-left: 20px;
+}
+#mode_box {
+display: none;
+height: 30px;
+padding-left: 20px;
+}
+
+#expenses_box {
+display: none;
+height: 70px;
+padding-left: 20px;
+}
+
+#passenger_box {
+display: none;
+height: 50px;
+padding-left: 20px;
+}
+
+#page_about {
+}
+
+#page_footer {
+	text-align: center;
+	width: 100%;
+background: black;
+color: white;
+   position: relative;
+	margin-top: -30px; /* negative value of footer height */
+	height: 30px;
+	clear:both;
+}
+
+.tooltip {
+position: absolute;
+top: 0;
+left: 0;
+z-index: 3;
+display: none;
+}
+
+.section {
+padding: 5px;
+border: 1px solid green; width: 60%; margin: 10px; 
+margin-left: auto; margin-right: auto;
+}
+
+.section_heading {
+font-size: 1.5em; font-weight: strong;
+}
+
+.section_content {
+padding: 10px;
+}
+
+.help_link {
+	background: #04819E;
+	padding-left: 2px;	
+	border: 1px solid black;
+}
+
+.help_link:hover { background-color: whiteSmoke;}
+
+.help_tip {
+	padding-left: 2px;	
+	border-bottom: 2px solid blue;
+}
+
+.faq {
+font-style: italic;
+font-size: 1.3em;
+font-weight: strong;
+padding: 10px;
+}
+
+.faq_answer {
+padding-bottom: 10px;
+padding-left: 10px;
+}

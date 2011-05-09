@@ -1,0 +1,72 @@
+
+table,td,th{
+	border: 1px solid black;
+	border-collapse:collapse;
+	margin: 0px;
+	padding: 2px;
+}
+
+thead th{
+	font-weight:bold;
+	vertical-align:bottom;
+	margin-bottom:5px;
+	border: 1px solid #000;
+	border-collapse:collapse;	
+}
+
+table.user_data_table {
+width: 90%;
+border: none;
+}
+
+table.user_data_table  td {
+border: none;
+border-bottom: 1px dotted grey;
+padding-bottom: 0px;
+margin-bottom: 0px;
+border-collapse:collapse;
+}
+
+.tripreport {
+	height: 100%;
+	width: 98%;
+	margin-left: 10px;
+	margin-top: 10px;	
+}
+
+#print-button {
+float: left;
+display: none;
+padding: 30px 10px 1px 10px; 
+border: none;
+}
+
+.report-title {
+    text-align: center;
+    font-weight: bold;
+text-decoration:underline;
+}
+
+.report-dates {
+    text-align: left;
+    font-weight: bold;
+}
+
+.report-for-who {
+    text-align: right;
+    font-weight: bold;
+text-decoration:underline;
+}
+
+.appendix_title {
+    text-align: right;
+    font-weight: bold;
+    font-size: 2em; 
+    margin-bottom: 10px;
+}
+.bold-italic {
+    font-family: "Helvetica"; 
+    font-size: 1.1em; 
+    font-weight: strong;
+    font-style: italic;
+}

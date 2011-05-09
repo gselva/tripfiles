@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+		<div id="app_main">
+		<div class="page_title">TripFiles Pricing & Help</div>
+		
+		<div style="padding: 10px; width: 40%; margin-top: 10px; margin-left: auto; margin-right: auto; text-align: center;font-style: italic; font-size: 1.3em; ">
+		<span style="font-weight: bold; font-style: normal; color: green;">15 days free trial. &pound2.24 per month after the trial period. </span> <br /> <br />
+		Our customer support email is <span style="font-weight: bold; ">tripfiles.cs@gmail.com</span>
+		
+		</div>
+		
+		<div class="section">
+		<div class="section_heading">
+		Frequently asked questions
+		</div>
+		<div class="faq">Can I see a sample report? </div>
+		<div class="faq_answer">Sure. Here is a <a href="/support/HillingdonPCT.pdf" class="help_link">Hillingdon PCT mileage report (PDF)</a> and <a href="/support/BucksPCT.pdf" class="help_link">Bucks PCT mileage report (PDF)</a>. You'll need a PDF Reader to open and print PDF reports. If your computer does not have a PDF reader, you can get  Adobe Acrobat PDF Reader <a href="http://get.adobe.com/uk/reader/" class="help_link">(click here for free download).</a>
+		</div>
+
+		<div class="faq">When I click on some buttons and menus, nothing happens. What's going on? </div>
+		<div class="faq_answer">Usually this is because javascript is turned-off in your browser. Tripfiles will not function without javascript. Please turn-on javascript. <a href="http://enable-javascript.com/" class="help_link">Here are the instructions to turn it on.</a>
+		</div>
+		<div class="faq">Your terms of Service?</div>
+		<div class="faq_answer"><a href="#" onclick="window.open('/support/tos.html','Terms of Service','width=800,height=600,toolbar=no,location=no,status=no')">Click here to read our Terms of Service.</a> 
+		</div>
+
+		</div>
+	
+		<div class="section">
+		<div class="section_heading">
+		Registration, Login and Logout
+		</div>
+		<div class="section_content"> To begin using TripFiles, use the <img src="/images/registerbtn.png" /> on the top right of the web page to begin the registration. During registration, you'll need a google login (which you can get for free <a href="http://mail.google.com/mail/signup" class="help_link">here</a>) and your payment details.  
+		<br /><br />
+		To login into TripFiles, use the <img src="/images/loginbtn.png" /> button on the top right of the web page. You should use the same google login your registered with.
+		<br /><br />
+		To Logout of TripFiles, use the <img src="/images/logoutbtn.png" /> button on the top right of the web page.
+		</div>
+		</div>
+		
+
+		<div class="section">
+		<div class="section_heading">
+		Account Management and Subscription
+		</div>
+		<div class="section_content"> Once logged-in into TripFiles, you can manage your Account using the <img src="/images/accountbtn.png" /> button on the top right of the web page. You can update the details that go into your Mileage report on the Account page.
+		<br /><br />
+		On the same page, you can also manage your TripFiles Subscription. TripFiles uses <img src="/images/spreedlylogo.gif" width="100" height="30"/> (Spreedly.com) to manage your subscriptions. You'll be taken there during Subscription update. You can return to TripFiles from Spreedly using the TripFiles link on Spreedly page (displayed at the bottom of Spreedly page). 
+		</div>
+		</div>
+		
+		<div class="section">
+		<div class="section_heading">
+		Creating and updating Mileage expenses
+		</div>
+		<div class="section_content"> Use the <a href="/" class="help_link">Home</a> menu link (visible beneath TripFiles Logo on top left) to go to New Trip page. The left panel on this page provides various fields that you can optionally fill to create a trip. One trip corresponds to one row in your mileage report. You can create as many trips as needed. There can be multiple trips on the same date (<span class="help_tip">Tip:</span> You can save a trip and then simply re-use the mileage values by changing just the date). 
+		<br />
+		<br />
+		From the Report page (see below), you can use the Update button on any row of the Mileage report to update that particular trip. The Update Trip page is similar to New Trip page. Do note that when you update Trip Date on an update page it will update the date rather than create a new trip (unlike the <span class="help_tip">Tip</span> provided earlier for creating New Trip).
+		</div>
+		</div>
+		
+		<div class="section">
+		<div class="section_heading">
+		Viewing and Downloading Mileage expense reports
+		</div>
+		<div class="section_content"> Use the <a href="/report" class="help_link">Reports</a> menu link to go to Reports page. Select the date range for the report to view the report. You can download a PDF copy of the report using the download button (shown only if the report can be downloaded). 
+		<br /><br />
+		<span class="help_tip">Note:</span> The PDF report is formatted according to the specific template used within your organization. Please contact customer support if this has changed.
+		</div>
+		</div>
+		
+		</div>	
+
+{% endblock %}

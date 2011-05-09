@@ -1,0 +1,348 @@
+<html>
+<head>
+<style>
+@page {
+  size: a4 landscape;
+  margin: 1cm;
+ 
+  @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 0cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 3cm;
+    font-size: 0.75em; 
+  }
+  
+} 
+
+
+
+</style>
+</head>
+<body>
+
+<div class="tripreport">
+{% if userdata %}
+<div class="report-for-who">{{userdata.mileage_template}}</div>
+<div class="report-title">CLAIM FOR TRAVELLING & SUBSISTENCE ALLOWANCES</div>
+<div class="appendix_title">APPENDIX A</div>
+
+<table class="user_data_table" >
+<tbody>
+	<tr>
+		<td width="12%">Name</td>
+		<td width="36%"  colspan=3 class="bold-italic">{{userdata.first_name}} {{userdata.middle_name}} {{userdata.last_name}}</td>
+		<td width="12%">Make, CC of vehicle</td>
+		<td width="36%" colspan=3 class="bold-italic">{{userdata.vehicle_make}} {{userdata.vehicle_cc}}</td>
+	</tr>
+	<tr>
+		<td width="12%" >Designation/Grade</td>
+		<td width="12%" class="bold-italic">{{userdata.work_title}}</td>
+		<td width="12%" >Personal No</td>
+		<td width="12%" class="bold-italic">{{userdata.work_id}}</td>
+		<td width="12%" >Registration Number</td>
+		<td width="36%" colspan=3 class="bold-italic">{{userdata.vehicle_registration}}</td>
+	</tr>
+	<tr>
+		<td width="12%" >Home Address</td>
+		<td width="36%" colspan="3" class="bold-italic">{{userdata.home_address}}</td>
+		<td width="12%" >PCT LEASE CAR</td>
+		<td width="36%" colspan="3" class="bold-italic">YES / NO</td>
+	</tr>
+	
+	<tr>
+		<td width="48%"  colspan="4" ></td>
+		<td width="12%">Base</td>	
+		<td width="12%" class="bold-italic">{{userdata.office_base_address}}</td>
+		<td width="12%">Distance from Home</td>
+		<td width="12%"></td>						
+	</tr>
+</tbody>	
+</table>
+{% endif %}
+
+
+<div style="padding-top: 10px; padding-bottom:10px;">&nbsp; </div>
+
+{% if reportview %}
+
+	<table class="claim_data_table">
+	<thead> 
+		<tr> 
+			<th scope="col" style="border-bottom: none;">Date</th> 
+			<th scope="col" style="border-bottom: none;">Duty</th>
+			<th scope="col" style="border-bottom: none;">Details of journey, course, subsistence or other expenses<sup>2</sup></th> 
+			<th scope="col" colspan=2 >Number of miles</th>
+			
+			<th scope="col" colspan=2>Official Passengers</th>
+			
+			<th scope="col" colspan=3>Fares<sup>1</sup>
+			<br/>R = Rail<br />B = Bus<br />T = Taxi<br />P = Parking Costs</th>
+
+			<th scope="col" colspan=2>Amount of Subsistence<sup>1</sup></th>
+
+			<th scope="col" colspan=2>Other (eg:course fees<sup>1</sup>)</th>
+		</tr> 
+		<tr> 
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col">Code</th>
+			<th scope="col">Miles</th>
+			<th scope="col">No</th>
+			<th scope="col">Miles</th>
+			<th scope="col">Code</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+		</tr>
+	</thead>	
+
+	<tbody>
+	
+		{% for trip in reportview.firstpage_trips %}
+		<tr id='trip{{trip.id}}'>
+			<td width="10%" >{{trip.date}}&nbsp;</td>
+			<td width="5%">&nbsp</td>
+			<td width="35%">{{trip.addresses}}</td>
+			
+			
+			<td width="4%">{{trip.code}}</td>
+			 {% ifequal trip.distance 0.0 %}
+			<td width="4%">&nbsp;</td>			 
+			 {% else %}
+			<td width="4%">{{trip.distance}}</td>
+			{% endifequal %} 
+			
+			<td width="4%">{{trip.other_no_passengers}} </td>
+			<td width="4%">{{trip.other_passenger_miles}}</td>
+			
+			<td width="4%">{{trip.other_expense_label}}</td>
+			<td width="4%">{{trip.other_expense_pound}}</td>
+			<td width="4%">{{trip.other_expense_pence}}</td>
+			
+			<td width="4%"></td>
+			<td width="4%"></td>
+	
+			<td width="4%"></td>
+			<td width="4%"></td>
+			
+		</tr>
+		{% endfor %}
+	
+	{% if reportview and reportview.nextpages %}
+	</tbody>
+	</table>
+	<div><pdf:nextpage /></div> 
+	<table  repeat=2 class="claim_data_table">
+	<thead> 
+		<tr> 
+			<th scope="col" style="border-bottom: none;">Date</th> 
+			<th scope="col" style="border-bottom: none;">Duty</th>
+			<th scope="col" style="border-bottom: none;">Details of journey, course, subsistence or other expenses<sup>2</sup></th> 
+			<th scope="col" colspan=2 >Number of miles</th>
+			
+			<th scope="col" colspan=2>Official Passengers</th>
+			
+			<th scope="col" colspan=3>Fares<sup>1</sup>
+			<br/>R = Rail<br />B = Bus<br />T = Taxi<br />P = Parking Costs</th>
+
+			<th scope="col" colspan=2>Amount of Subsistence<sup>1</sup></th>
+
+			<th scope="col" colspan=2>Other (eg:course fees<sup>1</sup>)</th>
+		</tr> 
+		<tr> 
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col">Code</th>
+			<th scope="col">Miles</th>
+			<th scope="col">No</th>
+			<th scope="col">Miles</th>
+			<th scope="col">Code</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>
+		</tr>
+	</thead>	
+	
+	<tbody>
+	
+	{% for apage in reportview.nextpages %}
+	{% for trip in apage %}
+		<tr id='trip{{trip.id}}'>
+			<td width="10%" >{{trip.date}}&nbsp;</td>
+			<td width="5%">&nbsp</td>
+			<td width="35%">{{trip.addresses}}</td>
+			
+			
+			<td width="4%">{{trip.code}}</td>
+			 {% ifequal trip.distance 0.0 %}
+			<td width="4%">&nbsp;</td>			 
+			 {% else %}
+			<td width="4%">{{trip.distance}}</td>
+			{% endifequal %} 
+			
+			<td width="4%">{{trip.other_no_passengers}} </td>
+			<td width="4%">{{trip.other_passenger_miles}}</td>
+			
+			<td width="4%">{{trip.other_expense_label}}</td>
+			<td width="4%">{{trip.other_expense_pound}}</td>
+			<td width="4%">{{trip.other_expense_pence}}</td>
+			
+			<td width="4%"></td>
+			<td width="4%"></td>
+	
+			<td width="4%"></td>
+			<td width="4%"></td>
+			
+		</tr>
+	{% endfor %}
+	</tbody>
+	
+	{% endfor %}
+	
+	{% else %} <!-- only one page-->
+		</tbody>
+	<tfoot> 
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col">TOTALS</th>
+		<th scope="col"></th>
+		<th scope="col">{{ reportview.distance }}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.report_total_passenger_mileage}}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.total_other_expense_pound}}</th>
+		<th scope="col">{{reportview.total_other_expense_pence}}</th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+	</tfoot> 	
+	</table>
+	<p>&nbsp;</p>
+	<div><pdf:nextpage /></div> 
+	{% endif %}
+		
+	{% if reportview and reportview.nextpages %} <!-- last page footer -->
+	<tfoot> 
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col">TOTALS</th>
+		<th scope="col"></th>
+		<th scope="col">{{ reportview.distance }}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.report_total_passenger_mileage}}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.total_other_expense_pound}}</th>
+		<th scope="col">{{reportview.total_other_expense_pence}}</th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+	</tfoot> 	
+	</table>
+	{% endif %}
+	<br />
+	<table>
+	<tr><td width="50%" style="vertical-align: top; ">
+	<table class="signoff-box">
+		<tbody>
+			<tr>
+				<td colspan=6 width="90%">
+				I certify that the Insurance Policy in respect of my vehicle provides cover while it is being used on official business for Full Third Party Insurance, including cover against risk of injury to, or death of passengers and damage to personal property and that the policy is now in force and covers journeys claimed, and declare that:<br />
+
+- The travelling expenses claimed were actually and necessarily incurred whilst engaged on the duty stated<br />
+- The subsistence allowances claimed are properly due in respect of the periods of absence from home and headquarters stated, and (a) have spent more on meals than if I had been at my permanent base and (b) have incurred expenditure on an additional meal where an allowance is claimed for a period of more than 8 hours<br />	
+- No claim in respect of the above has been made on any other Authority<br />
+- Car Mileage Allowance at a rate exceeding the public transport rate is claimed where a public service was not available or was not suitable<br />
+	
+				</td>
+				
+			</tr>
+			<tr><td colspan=6>&nbsp;</td></tr>
+			<tr>
+			<td width="70%" colspan=4 class="grey_underline">Signed</td>
+			<td colspan=2 width="20%" class="grey_underline">Date</td>	
+			</tr>
+			
+			<tr>
+			<td colspan=6 width="90%">															
+I certify that to the best of my knowledge and belief, the claimant was engaged on the service or business stated on the dates shown overleaf, and that where car allowance is claimed, travel by public service was inappropriate.
+			</td>
+			</tr>
+			<tr><td colspan=6>&nbsp;</td></tr>
+			<tr>			
+			<td width="40%" colspan=2 class="grey_underline">Authorised by</td>
+			<td colspan=2 width="40%" class="grey_underline">Date</td>
+			</tr>
+
+			<tr><td colspan=6>&nbsp;</td></tr>
+			<tr>
+			<td width="80%" colspan=4 class="grey_underline">Position</td>
+			</tr>
+		</tbody>
+
+	</table>	
+	</td>
+	<td width="5%"></td>
+	<td style="vertical-align: top; " width="45%">
+	
+	<table style="border: 1px solid black; padding-top: 1px; margin-left: 1px; text-align: middle; font-size: 0.85em;" width="90%" class="office_box">
+	<tr><td colspan=6>FOR FINANCE OFFICE USE ONLY</td></tr>
+	<tr><td width="35%">DESCRIPTION</td><td>CODE</td><td>MILES</td><td>RATE</td><td>&pound;</td><td>P</td></tr>
+	<tr><td>Regular User Miles</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>Standard User Miles</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>Lease Car Miles</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>Passed by Finance</td><td colspan=5 style="text-align: left;">Initials / date</td></tr>	
+	</table>
+	</td>
+	
+	</tr>
+	</table>
+
+	
+	
+		<div id="footerContent">
+		<table border=0 class="footer" cellspacing=0>
+		<tbody>
+			<tr>
+				<td colspan=3 width="60%">1. Any claim for fares, subsistence or "other" must be supported by tickets, receipts etc</td>
+			</tr>
+			<tr>
+			<td colspan=3 width="60%">2. Mileage Key: P= Public Transport Rate / S = Standard Rate / L = Lease Car Rate / R = Regular User Rate</td>
+			<td style="text-align: right;">Page 
+				<pdf:pagenumber/>
+				of {{reportview.page_count}}
+			</td>
+			</tr>
+			<tr>
+				<td colspan=3 width="60%">3. All Course, Conference or other Training mileage should be entered at Public Transport Rate ( except for Lease Car Users).</td>
+			</tr>
+			<tr>
+				<td colspan=3 width="60%">4. All mileage for journeys in excess of 50 miles each way (100 return) must be entered at Public Transport Rate ( except for Lease Car Users</td>
+			</tr>
+		</tbody>
+
+	</table>
+	</div>
+{% else %}
+	No trips created between {{  reportview.startdate }} and {{  reportview.enddate }}! 
+{% endif %}
+</div>
+</body>
+</html>

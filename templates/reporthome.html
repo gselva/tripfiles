@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block css_links %}
+
+<link type="text/css" rel="stylesheet" href="/stylesheets/report.css" />
+{% endblock %}
+
+{% block page_content %}
+<div class="page_title">Trip Report</div>
+{% if user_registered or save_enabled %}
+<div id="report_dates" style="height: 80px;">
+	<form name="reportForm" id="reportForm" action="/report/download" method="post">
+	<div style="float: left; padding: 10px 10px 10px 10px;">Start Date
+		<div> 
+			<input type="text" name="startdate" id="startdatepicker"></input>
+		</div> 
+	</div>
+	<div style="float: left; padding: 10px 10px 10px 10px; ">End Date:
+		<div> 
+			<input type="text" name="enddate" id="enddatepicker"> </input>
+		</div>
+	</div>
+	{% if adminEnabled %}
+	<div style="float: left; padding: 10px 10px 10px 10px; ">User email: 
+		<div> 
+			<input type="text" name="user_email" id="user_email" value="{{user_email}}" />
+		</div>
+	</div>
+	{% endif %}	
+	<div style="float: left; padding: 30px 10px 1px 10px; border: none;">
+	<a href="#" onClick="showReport();return false;">
+		<img style="border: none;" src="/images/viewreportbtn.png" />
+	</a>
+	</div>
+	
+	<div id="print-button" ><!--style="float: left; display: none;"-->
+		<a href="#" onClick="downloadReport('#reportForm');return false;">
+			<img style="border: none;" src="/images/downloadpdfbtn.png" />
+		</a>
+	</div>
+
+
+	</form>
+</div> <!--report_dates-->
+{% endif %}
+
+<div style="clear: both;" ></div>
+<div id="app_notification"></div>	
+<div id="report-panel">Please select start and end dates above to get mileage report.</div>
+{% endblock %}
+
+{% block after_body %}
+<script src="/js/tripfiles-report-0.5.js"></script>
+{% endblock %}

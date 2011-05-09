@@ -1,0 +1,190 @@
+@page {
+  size: a4 landscape;
+  margin: 1cm;
+  @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 2cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+  }
+} 
+
+html {
+    font-family: "Times New Roman"; 
+    font-size: 0.9em; 
+    font-weight: normal;
+    color: #000000; 
+    background-color: transparent;
+    margin: 0; 
+    padding: 0;
+    line-height: 150%;
+    border: 1px none;
+    display: inline;
+    width: auto;
+    height: auto;
+    white-space: normal;    
+}
+
+address,
+blockquote,
+body,
+center,
+dl,
+dir,
+div,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+isindex,
+menu,
+noframes,
+noscript,
+ol,
+p,
+pre,
+table,
+th,
+tr,
+td,
+ul,
+li,
+dd,
+dt,
+pdftoc {
+    display: block;
+}
+
+table,td,th{
+	border: none;
+	border-collapse:collapse;
+	margin: 0px;
+	padding: 0px;
+}
+
+thead th{
+	font-weight:normal;
+	vertical-align:bottom;
+	margin-bottom:5px;
+	border: 1px solid #000;
+	border-collapse:collapse;	
+	padding: 2px 2px;
+}
+
+tfoot th{
+	font-weight:normal;
+	vertical-align:bottom;
+	margin-bottom:5px;
+	border: 1px solid #000;
+	border-collapse:collapse;	
+	padding: 2px 2px;
+}
+
+table.user_data_table {
+width: 90%;
+border: none;
+padding: 0px;
+vertical-align: bottom;
+}
+
+table.user_data_table  td {
+border: none;
+border-bottom: 1px dotted grey;
+border-collapse:collapse;
+line-height: 1.0em;
+}
+
+table.claim_data_table  td {
+border: 1px solid black;
+padding: 2px 2px;
+line-height: 30%;
+width: auto;
+border-collapse:collapse;
+font-family: "Times New Roman"; 
+font-size: 0.80em; 
+font-weight: normal;
+}
+
+.report-for-who {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.2em; 
+    margin-bottom: 10px;
+    display: block;
+}
+
+.appendix_title {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.8em; 
+    margin-bottom: 10px;
+     display: block;
+}
+
+.report-title {
+    text-align: center;
+    font-weight: bold;
+text-decoration:underline;
+ display: block;
+}
+
+.report-dates {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.page-breaker {
+	page-break-after: always;
+}
+
+.signoff-box  {
+    font-family: "Times New Roman"; 
+    font-size: 0.85em; 
+    font-weight: normal;
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.smaller-font {
+    font-family: "Times New Roman"; 
+    font-size: 0.75em; 
+    font-weight: normal;
+}
+
+.bold-italic {
+    font-family: "Helvetica"; 
+    font-size: 1.1em; 
+    font-weight: strong;
+    font-style: italic;
+}
+
+.grey_underline {
+border-bottom: 1px dotted grey;
+border-bottom-style: dotted;
+padding-bottom: 0px;
+margin-bottom: 0px;
+line-height: 30%;
+}
+
+table.footer td {
+    font-family: "Times New Roman"; 
+    font-size: 0.80em; 
+    font-weight: normal;
+    line-height: .80em;
+    padding: 0px;
+}
+
+table.office_box td {
+border: 1px solid black;
+    font-family: "Times New Roman"; 
+    font-size: 0.85em; 
+    font-weight: normal;
+    padding: 2px;
+}

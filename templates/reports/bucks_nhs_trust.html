@@ -1,0 +1,511 @@
+<html>
+<head>
+<style>
+@page {
+  size: a4 portrait;
+  margin: 1cm;
+ 
+  @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 0cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+    font-size: 0.75em; 
+  }
+  
+} 
+
+.new-report-title {
+font-family: "Arial"; 
+font-size: 1.20em; 
+margin-top: 10px;
+margin-bottom:10px;
+padding: 0px;
+font-weight: bold;
+text-align: center;
+background: #d4cfcf;
+}
+
+.signoff-box  {
+    font-family: "Times New Roman"; 
+    font-size: 1.0em; 
+    font-weight: normal;
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="tripreport">
+{% if userdata %}
+<img src="../../templates/reports/img/bucks_nhs_trust_logo-small.jpg" align="right">
+
+<div class="new-report-title">BUSINESS MILEAGE AND SUBSISTENCE / EXPENSES MONTHLY CLAIM FORM</div>
+
+<div style="font-weight: bold; text-align: left;">Payroll Reference Details (from your payslip)</div>
+
+<table class="claim_data_table">
+<thead> 
+	<tr> 
+		<th scope="col">Payroll<br /></th> 
+		<th scope="col">PP<br /></th>
+		<th scope="col">Personal No<br /></th> 
+		<th scope="col">Surname<br /></th>
+		<th scope="col">Initals<br /></th> 
+		<th scope="col">Dates From<br /></th>
+		<th scope="col">To<br /></th>		
+	</tr>
+</thead>
+</table>
+<div style="padding-top: 10px; padding-bottom:10px;">&nbsp; </div>	
+<table class="user_data_table" >
+<tbody>
+	<tr>
+		<td width="12%" >Home Address:</td>
+		<td width="84%" colspan="7" class="bold-italic">{{userdata.home_address}}</td>
+	</tr>
+	<tr>
+		<td width="96%" colspan="8" class="bold-italic"></td>
+	</tr>
+	<tr>
+		<td width="12%">Office Base HQ:</td>	
+		<td width="36%" colspan=3 class="bold-italic">{{userdata.office_base_address}}</td>
+		<td width="12%" >Dept:</td>
+		<td width="36%" colspan=3 class="bold-italic">{{userdata.work_department}}</td>
+	</tr>
+	<tr>	
+		<td width="12%">Make of Vehicle:</td>
+		<td width="12%" class="bold-italic">{{userdata.vehicle_make}} {{userdata.vehicle_cc}}</td>
+		<td width="12%">Model:</td>
+		<td width="12%" class="bold-italic"></td>
+		<td width="12%">Reg No:</td>
+		<td width="12%" class="bold-italic">{{userdata.vehicle_registration}}</td>
+		<td width="12%">CC:</td>
+		<td width="12%" class="bold-italic">{{userdata.vehicle_cc}}</td>		
+	</tr>
+</tbody>	
+</table>
+{% endif %}
+<div style="padding-top: 10px; ">&nbsp; </div>	
+<table>
+<tbody>
+	<tr>
+		<td colspan=4>
+		<span style="font-weight: bold;">NOTE:ANY TRAINING EXPENSES MUST BE SUBMITTED ON THE BLUE CLAIM FORM<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;EXCESS MILEAGE MUST BE SUBMITTED ON THE EXCESS MILEAGE CLAIM FORM</span>
+		</td>
+	</tr>
+</tbody>
+</table>	
+<div style="padding-top: 10px; ">&nbsp; </div>	
+<table class="user_data_table">
+<tbody>
+	<tr>
+		<td width="48%" colspan=2>Have you changed your vehicle since your last claim? YES/NO</td>	
+		<td width="48%" colspan=2>If yes, the old vehicle was as follows:</td>
+	</tr>
+	
+	<tr>
+		<td width="24%">Make:</td>	
+		<td width="24%"></td>
+		<td width="24%" >Model:</td>
+		<td width="24%"></td>
+	</tr>
+	<tr>
+		<td width="48%" colspan=2>CC:</td>	
+		<td width="48%" colspan=2>Date you first used your new vehicle:</td>
+	</tr>
+</tbody>
+</table>
+
+<div style="padding-top: 10px; padding-bottom:10px;">&nbsp; </div>
+
+{% if reportview %}
+
+	<table class="claim_data_table">
+	<thead>
+		<tr>
+			<th scope="col" style="border-bottom: none;">Date</th> 
+			<th scope="col" style="border-bottom: none;">Mode of Travel (Car, Motorcycle etc)</th>
+			<th scope="col" style="border-bottom: none;">Details of Journey</th> 
+			<th scope="col" style="border-bottom: none;">Emergency Call out</th> 
+			<th scope="col" style="border-bottom: none;">Passenger Miles</th>
+			<th scope="col" style="border-bottom: none;">Official Miles</th> 
+			<th scope="col" colspan=3>Public Transport Fares and Other Expenses (to be detailed with vouchers where applicable)</th>
+		</tr>
+		<tr> 
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col" style="border-top: none;"></th>
+			<th scope="col">Details</th>
+			<th scope="col">&pound;</th>
+			<th scope="col">P</th>			
+		</tr>
+	</thead>
+
+	<tbody>
+	
+		{% for trip in reportview.firstpage_trips %}
+		<tr id='trip{{trip.id}}'>
+			<td width="15%" >{{trip.date}}&nbsp;</td>
+			<td width="10%">{{trip.code}}</td>
+			<td width="30%">{{trip.addresses}}</td>
+			<td width="9%">&nbsp;</td>			 
+			<td width="10%">{{trip.other_passenger_miles}}</td>
+			
+			 {% ifequal trip.distance 0.0 %}
+			<td width="5%">&nbsp;</td>			 
+			 {% else %}
+			<td width="5%">{{trip.distance}}</td>
+			{% endifequal %} 
+			
+			
+			<td width="12%">{{trip.other_expense_label}}</td>
+			<td width="5%">{{trip.other_expense_pound}}</td>
+			<td width="5%">{{trip.other_expense_pence}}</td>
+		</tr>
+		{% endfor %}
+	
+	{% if reportview and reportview.nextpages %}	
+		{% for apage in reportview.nextpages %}
+		{% for trip in apage %}
+		<tr id='trip{{trip.id}}'>
+			<td width="15%" >{{trip.date}}&nbsp;</td>
+			<td width="10%">{{trip.code}}</td>
+			<td width="30%">{{trip.addresses}}</td>
+			<td width="9%">&nbsp;</td>			 
+			<td width="10%">{{trip.other_passenger_miles}}</td>
+			
+			 {% ifequal trip.distance 0.0 %}
+			<td width="5%">&nbsp;</td>			 
+			 {% else %}
+			<td width="5%">{{trip.distance}}</td>
+			{% endifequal %} 
+			
+			
+			<td width="12%">{{trip.other_expense_label}}</td>
+			<td width="5%">{{trip.other_expense_pound}}</td>
+			<td width="5%">{{trip.other_expense_pence}}</td>
+		</tr>
+		{% endfor %}
+		{% endfor %}
+	{% endif %}		
+	
+	</tbody>
+	
+	<tfoot> 
+		<th scope="col"></th>
+		<th scope="col"></th>
+		<th scope="col">TOTALS</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.report_total_passenger_mileage}}</th>
+		<th scope="col">{{ reportview.distance }}</th>
+		<th scope="col"></th>
+		<th scope="col">{{reportview.total_other_expense_pound}}</th>
+		<th scope="col">{{reportview.total_other_expense_pence}}</th>
+	</tfoot> 	
+	</table>
+
+	<br />
+	<table>
+	<div><pdf:nextpage /></div> 
+	<table class="signoff-box">
+		<tbody>
+			<tr>
+				<td colspan=6 width="90%">
+				<span style="text-decoration:underline; font-weight: bold; margin-bottom: 5px;">GUIDANCE NOTES</span><br />
+1) 	Your payroll number must be entered on the front of this form. This is the complete number that appears on the top left hand corner of your payslip. <br />
+2) 	If you wish to claim tax relief on emergency call-outs, then the Emergency Call-Out employee's statement must be signed below. <br />
+3)	Please complete each day's journeys in full and total the mileage at the bottom of each column. <br />
+4)	Official miles should be the lesser of the actual mileage travelled or the mileage from base to place visited (and return where necessary). <br /> 
+5)	Passenger miles can be claimed for each passenger (e.g. 2 passengers for a 10 mile journey 20 miles claimed). <br /><br />
+
+I DECLARE THAT (a) the expenses and allowances claimed were actually and necessarily incurred whilst engaged on the duty stated and are in accordance with the regulations, (b) no other claim has been made by me on any other Authority in respect of duties performed during the period stated above, and (c) the insurance policy in respect of my motor vehicle (Registration Number as overleaf) provides cover, whilst the vehicle is used on official business, for third party insurance including cover against risk of injury to or death of passengers and damage to property. and that the policy is now in force and covers the journeys claimed. 
+				</td>
+				
+			</tr>
+			<tr><td colspan=6>&nbsp;</td></tr>
+			<tr>
+			<td width="70%" colspan=4 class="grey_underline">Signature:</td>
+			<td colspan=2 width="20%" class="grey_underline">Date:</td>	
+			</tr>
+			
+			<tr><td colspan=6>&nbsp;</td></tr>
+			
+			<tr>			
+			<td colspan=6 width="90%">												
+			<span style="text-decoration:underline;">Emergency Call-Out Employees Statement</span><br />
+Except where indicated above, I certify that advice on the handling of the emergency was given before starting my emergency call-out journeys and I accepted full responsibility for those aspects appropriate to my duties from that time (journeys, which I consider do not qualify for tax relief, are shown separately above).
+			</td>
+			</tr>
+			<tr><td colspan=6>&nbsp;</td></tr>
+			<tr>			
+			<td width="70%" colspan=4 class="grey_underline">Employee's signature:</td>
+			<td colspan=2 width="20%" class="grey_underline">Date:</td>
+			</tr>
+			
+			<tr><td colspan=6>&nbsp;</td></tr>
+			
+			<tr>
+			<td colspan=6 width="90%">												
+			<span style="text-decoration:underline;">Head of Department's Certification</span><br />
+I certify that, to the best of my knowledge and belief, the claimant was engaged on the duty stated on the dates shown overleaf and that the claims for expenses and subsistence are in accordance with the regulations (General Whitley Council Sections 22, 23 and 24). <br ><br />
+
+Upon completion this form should be sent to:- <br />
+Payroll Services, Bucks Shared Services, Amersham Hospital, Whielden Street, Amersham, Bucks, HP7 OJD
+			</td>
+			</tr>
+			<tr><td colspan=6>&nbsp;</td></tr>
+			<tr>			
+			<td width="70%" colspan=4 class="grey_underline">Signature:</td>
+			<td colspan=2 width="20%" class="grey_underline">Date:</td>
+			</tr>
+			<tr>			
+			<td width="70%" colspan=4 class="grey_underline">Name in block capitals:</td>
+			<td colspan=2 width="20%" class="grey_underline">Tel No:</td>
+			</tr>
+
+		</tbody>
+
+	</table>
+	<div style="padding-top: 5px; ">&nbsp; </div>	
+	<table class="signoff-box" style="margin-bottom: 2px;">
+	<tbody>
+		<tr>
+			<td colspan=4>
+			<span style="font-weight: bold;">N.B. Only forms received in the payroll section by the 5th day of the month will be included with your next salary payment </span>
+			</td>
+		</tr>
+	</tbody>
+	</table>	
+
+<div style="border-bottom: 1px solid black; margin-bottom: 5px;">&nbsp; </div>
+	
+<!-- office use -->
+<div style="text-align: center; font-weight: bold;">FOR PAYROLL USE ONLY</div>
+<div style="text-align:left; font-weight: bold;">Reimbursement of Other Mileage</div>
+<table class="claim_data_table" style="text-align: center; font-size: 1.0em; ">
+	<thead>
+		<tr> 
+			<th scope="col">&nbsp</th>
+			<th scope="col" colspan=4  style="font-weight: bold;">Code</th>
+			<th scope="col" colspan=6  style="font-weight: bold;">Pence per mile</th>
+			<th scope="col" colspan=4 style="border-right:none;font-weight: bold;">Number</th>
+			<th scope="col" style="border-left:none;font-weight: bold;" >:12</th>
+			<th scope="col"  style="font-weight: bold;">IND</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td width="12%">Box 27</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>			
+		</tr>
+		<tr>
+			<td width="12%">Box 27</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>			
+		</tr>
+		<tr>
+			<td width="12%">Box 27</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>			
+		</tr>
+		
+	</tbody>
+</table>
+<!-- Other expenses-->
+<div style="margin-bottom: 5px;">&nbsp; </div>
+<div style="text-align:left; font-weight: bold;">Other Expenses</div>
+<table class="claim_data_table" style="text-align: center; font-size: 1.0em;" width="70%">
+	<thead>
+		<tr> 
+			<th scope="col">&nbsp</th>
+			<th scope="col" colspan=4  style="font-weight: bold;">Code</th>
+			<th scope="col"  style="font-weight: bold; border-right:none;" width="15%">Pounds</th>
+			<th scope="col"  colspan=4 style="font-weight: bold; border-left:none; border-right:none;">&nbsp</th>			
+			<th scope="col" style="font-weight: bold; border-left: none;">Pence</th>			
+			<th scope="col"  style="font-weight: bold;">IND</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td width="20%">Box 28</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>T</td>			
+		</tr>
+		<tr>
+			<td width="20%">Box 28</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>T</td>			
+		</tr>
+		<tr>
+			<td width="20%">Box 28</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>T</td>			
+		</tr>
+		
+	</tbody>
+</table>
+
+
+<!-- Subsistence -->
+<div style="margin-bottom: 5px;">&nbsp; </div>
+<div style="text-align:left; font-weight: bold;">Subsistence / Mileage</div>
+<table class="claim_data_table" style="text-align: center; font-size: 1.0em;" width="60%">
+	<thead>
+		<tr> 
+			<th scope="col">&nbsp</th>
+			<th scope="col" colspan=4  style="font-weight: bold;">Code</th>
+			<th scope="col"  style="font-weight: bold; border-right:none;" width="15%">Number</th>
+			<th scope="col"  colspan=3 style="font-weight: bold; border-left:none; border-right:none;">&nbsp</th>			
+			<th scope="col" style="font-weight: bold; border-left: none;">:12</th>			
+			<th scope="col"  style="font-weight: bold;">IND</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td width="20%">Box 30</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>T</td>			
+		</tr>
+		<tr>
+			<td width="20%">Box 30</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>T</td>			
+		</tr>
+		<tr>
+			<td width="20%">Box 30</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>T</td>			
+		</tr>
+		
+	</tbody>
+</table>
+<div style="margin-bottom: 5px;">&nbsp; </div>
+<table class="signoff-box">
+	<tbody>
+		<tr>
+			<td  class="grey_underline" colspan=2>Paid Wk/Mnth:</td>
+			<td class="grey_underline" colspan=2>Payroll Officer's Initials:</td>
+		</tr>
+	</tbody>
+</table>	
+
+
+<!-- end office-->
+		<div id="footerContent">
+		<table border=0 class="footer" cellspacing=0>
+		<tbody>
+			<tr>
+				<td colspan=3 width="60%">H/ACPS paperwork/claim form - mileage</td>
+			</tr>
+		</tbody>
+
+	</table>
+	</div>
+{% else %}
+	No trips created between {{  reportview.startdate }} and {{  reportview.enddate }}! 
+{% endif %}
+</div>
+</body>
+</html>
