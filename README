@@ -1,1 +1,7 @@
-First commit
+Mileage Expensing made easy. Written for friends in NHS(UK) and to learn Google App Engine. 
+-Python and jQuery
+-Google App Engine
+-Integrates with Spreedly (spreedly.com , very helpful guys) RESTful API for online subscription payment
+-Uses reportlab python PDF library for PDF generation
+-Uses Google Maps API for mapping and mileage calculations
+-Enjoy
